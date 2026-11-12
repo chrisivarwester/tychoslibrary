@@ -150,8 +150,15 @@ I juni 1584 sände Brucæus till Tycho »Mæstlini de emendatione Calendarii» (
     before a regex literal reads as a drive path to the publication gate, which stopped the publish of 11 November 2026.) */
  const DIGIT=new RegExp('[0-9]');
  const has=(x,t)=>x.includes(t.num?' '+t.w+' ':' '+t.w);
+ /* a last word that is a plain word (three letters or more, no digit, not a roman numeral) is read as the beginning
+    of a word from the first tier on: a name half typed, or typed in the shorter form another catalogue has (Apian,
+    where this edition has Apianus), finds every row the longer form finds. Without this the three records the
+    National Library files under 'Apian' answered the whole phrase and shut out every row with 'Apianus'
+    (12 November 2026). A number, a roman numeral (Band II must not open Band III) and a short siglum match whole. */
+ const ROMAN=new RegExp('^[ivxlcdm]+$');
+ const opens=q=>{const w=q.split(' ').pop();return w.length>=3&&!DIGIT.test(w)&&!ROMAN.test(w);};
  /* a row answers a query as a phrase; failing that anywhere, as the beginning of a phrase; then every word in one segment; then every word in the row */
- const TIERS=[(s,q)=>s.some(x=>x.includes(' '+q+' ')),(s,q)=>s.some(x=>x.includes(' '+q)),
+ const TIERS=[(s,q)=>{const p=opens(q)?' '+q:' '+q+' ';return s.some(x=>x.includes(p));},(s,q)=>s.some(x=>x.includes(' '+q)),
               (s,q,ts)=>s.some(x=>ts.every(t=>has(x,t))),(s,q,ts)=>ts.every(t=>s.some(x=>has(x,t)))];
  function mode(q){
   root.classList.toggle('conc-q',!!q);
