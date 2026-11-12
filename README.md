@@ -1,10 +1,6 @@
 # tychoslibrary.org
 
-The short address of the reconstruction of Tycho Brahe's library.
+Bibliotheca Tychoniana: the library of Tycho Brahe, a reconstruction.
 
-This repository holds only a forwarding page. `index.html` and `404.html` are the same file:
-whatever path is asked for at `tychoslibrary.org` is opened under
-`https://tychoniana.com/bibliotheca/tycho-brahe-library/`, so `tychoslibrary.org/volumes.html`
-opens the library's `volumes.html`.
-
-Served by GitHub Pages from `main`; the custom domain is set by the `CNAME` file.
+This repository is a publication target. Every file in it is generated and is replaced
+whole at each publish; nothing here is edited by hand.
